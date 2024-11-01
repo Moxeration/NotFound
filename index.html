@@ -15,7 +15,8 @@
             justify-content: center;
             height: 100vh;
             margin: 0;
-            overflow: hidden; /* Evita el scroll inicial */
+            overflow: hidden;
+            position: relative;
         }
 
         /* Efecto de desenfoque oscuro para el fondo */
@@ -48,6 +49,28 @@
         .title-bar-controls {
             display: none;
         }
+
+        /* Estilos para el botón "Next" */
+        .next-button {
+            display: inline-block;
+            margin-top: 20px;
+            padding: 10px 20px;
+            font-size: 16px;
+            color: #000;
+            background-color: #fff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity 0.5s ease, transform 0.5s ease;
+        }
+
+        /* Animación de entrada del botón */
+        .next-button.show {
+            opacity: 1;
+            transform: translateY(0);
+        }
     </style>
 </head>
 <body>
@@ -62,14 +85,21 @@
                 allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" 
                 referrerpolicy="strict-origin-when-cross-origin" allowfullscreen>
             </iframe>
+            <!-- Botón de redirección -->
+            <button class="next-button" onclick="redirectToNextPage()">Next</button>
         </div>
     </div>
 
     <script>
-        // Detecta el desplazamiento hacia abajo y redirige a la URL especificada
-        window.addEventListener('scroll', function() {
-            window.location.href = "https://wincym32.github.io/NotFound/source/html/html-info.html";
+        // Mostrar el botón con animación al cargar la página
+        window.addEventListener('load', () => {
+            document.querySelector('.next-button').classList.add('show');
         });
+
+        // Redirección al hacer clic en el botón
+        function redirectToNextPage() {
+            window.location.href = "https://wincym32.github.io/NotFound/source/html/html-info.html";
+        }
     </script>
 </body>
 </html>
