@@ -1,1 +1,156 @@
-# No files here 
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title id="page-title"></title> <!-- Título vacío que se llenará dinámicamente -->
+    <link rel="icon" href="https://github.com/WINCYM32/NotFound/raw/refs/heads/gh-pages/source/assets/icons/vista/Alert/Alert037.ico" type="image/x-icon" id="favicon">
+    <style>
+        /* Estilo para el fondo de la página */
+        body {
+            background: url('https://github.com/WINCYM32/NotFound/blob/gh-pages/source/assets/backgrounds/img3.jpg?raw=true') no-repeat center center fixed;
+            background-size: cover;
+            margin: 0;
+            height: 100vh;
+            display: flex;
+            flex-direction: column; /* Alineación en columna */
+            align-items: center; /* Centrar horizontalmente */
+            justify-content: flex-start; /* Alineación al principio */
+            color: white; /* Color del texto */
+            font-family: Arial, sans-serif; /* Fuente */
+            padding-top: 20px; /* Espaciado superior */
+        }
+
+        .header {
+            display: flex;
+            align-items: center; /* Centrar verticalmente la imagen y el texto */
+            justify-content: center;
+        }
+
+        .header img {
+            width: 200px; /* Tamaño de la imagen */
+            height: auto; /* Mantener la relación de aspecto */
+            margin-right: 10px; /* Espacio entre la imagen y el texto */
+        }
+
+        h1 {
+            margin: 0; /* Sin margen en el encabezado */
+            display: inline; /* Asegurarse de que el encabezado esté en línea con la imagen */
+        }
+
+        .window {
+            background: rgba(0, 0, 0, 0.8); /* Fondo oscuro con transparencia */
+            border: 1px solid #ccc; /* Borde claro */
+            border-radius: 8px; /* Bordes redondeados */
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5); /* Sombra */
+            margin: 20px; /* Margen alrededor de la ventana */
+            padding: 10px; /* Espaciado interno */
+            max-width: 600px; /* Ancho máximo ajustado */
+            max-height: 400px; /* Altura máxima ajustada */
+            position: relative; /* Para los controles */
+            overflow: hidden; /* Ocultar desbordamiento */
+        }
+
+        .title-bar {
+            display: flex;
+            justify-content: space-between; /* Espaciado entre texto y controles */
+            align-items: center; /* Centrar verticalmente */
+            background: #444; /* Fondo de la barra de título */
+            color: white; /* Color del texto */
+            padding: 5px 10px; /* Espaciado interno */
+            border-radius: 4px 4px 0 0; /* Bordes redondeados en la parte superior */
+        }
+
+        .title-bar-controls button {
+            background: transparent; /* Fondo transparente */
+            border: none; /* Sin borde */
+            color: white; /* Color del texto */
+            cursor: pointer; /* Cursor pointer */
+        }
+
+        .window-body {
+            padding: 10px; /* Espaciado interno */
+        }
+
+        iframe {
+            width: 100%; /* Ancho completo */
+            height: 300px; /* Altura ajustada */
+            border: none; /* Sin borde */
+            border-radius: 4px; /* Bordes redondeados */
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <img src="https://github.com/WINCYM32/NotFound/blob/gh-pages/source/assets/icons/NotFoundLOGO.png?raw=true" alt="Logo Not Found">
+        <h1>Blog</h1>
+    </div>
+
+    <div class="window active">
+        <div class="title-bar">
+            <div class="title-bar-text">README.md</div> <!-- Título de la ventana cambiado -->
+            <div class="title-bar-controls">
+                <button aria-label="Minimize"></button>
+                <button aria-label="Maximize"></button>
+                <button aria-label="Close"></button>
+            </div>
+        </div>
+        <div class="window-body has-space">
+            <iframe src="https://wincym32.github.io/NotFound/docs/" title="Contenido de NotFound Docs"></iframe>
+        </div>
+    </div>
+
+    <script>
+        // Texto del título de la pestaña
+        const titleText = "NotFound® : Blog";
+        let index = 0;
+        const titleElement = document.getElementById('page-title');
+        const favicon = document.getElementById('favicon');
+
+        // Lista de iconos para el efecto de revuelo
+        const icons = [
+            "https://github.com/WINCYM32/NotFound/raw/refs/heads/gh-pages/source/assets/icons/vista/Alert/Alert44.ico",
+            "https://github.com/WINCYM32/NotFound/raw/refs/heads/gh-pages/source/assets/icons/vista/Alert/Alert057.ico",
+            "https://github.com/WINCYM32/NotFound/raw/refs/heads/gh-pages/source/assets/icons/vista/Alert/Alert004.ico",
+            "https://github.com/WINCYM32/NotFound/raw/refs/heads/gh-pages/source/assets/icons/vista/Alert/Alert010.ico",
+            "https://github.com/WINCYM32/NotFound/raw/refs/heads/gh-pages/source/assets/icons/vista/Alert/Alert045.ico",
+            "https://raw.githubusercontent.com/WINCYM32/NotFound/refs/heads/gh-pages/source/assets/icons/vista/Applications/App069.ico",
+            "https://raw.githubusercontent.com/WINCYM32/NotFound/refs/heads/gh-pages/source/assets/icons/vista/Applications/App051.ico",
+            "https://raw.githubusercontent.com/WINCYM32/NotFound/refs/heads/gh-pages/source/assets/icons/vista/Applications/App041.ico",
+            "https://raw.githubusercontent.com/WINCYM32/NotFound/refs/heads/gh-pages/source/assets/icons/vista/Applications/App036.ico"
+        ];
+
+        function typeTitle() {
+            if (index < titleText.length) {
+                titleElement.textContent += titleText.charAt(index);
+                index++;
+                setTimeout(typeTitle, 200); // Cambia la velocidad aquí
+            } else {
+                // Llama a la función para revolver iconos una vez que el título esté completo
+                shuffleIcons();
+            }
+        }
+
+        function shuffleIcons() {
+            // Revolver los iconos
+            const shuffledIcons = [...icons, "https://github.com/WINCYM32/NotFound/raw/refs/heads/gh-pages/source/assets/icons/vista/Alert/Alert037.ico"];
+            let currentIconIndex = 0;
+
+            // Cambiar el icono cada 300 ms
+            const interval = setInterval(() => {
+                favicon.href = shuffledIcons[currentIconIndex];
+                currentIconIndex++;
+
+                // Si hemos pasado por todos los iconos, detener el intervalo y establecer el icono final
+                if (currentIconIndex >= shuffledIcons.length) {
+                    clearInterval(interval);
+                    favicon.href = "https://github.com/WINCYM32/NotFound/raw/refs/heads/gh-pages/source/assets/icons/vista/Alert/Alert037.ico"; // Icono final
+                }
+            }, 300);
+        }
+
+        // Iniciar la escritura del título al cargar la página
+        window.onload = typeTitle;
+    </script>
+</body>
+</html>
