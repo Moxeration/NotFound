@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NotFound : Info</title>
+    <link rel="stylesheet" href="https://unpkg.com/7.css"> <!-- Carga de 7.css -->
+    <style>
+        /* Estilo para el fondo de la página */
+        body {
+            background: url('https://github.com/WINCYM32/NotFound/blob/gh-pages/source/assets/backgrounds/forrest.jpg?raw=true') no-repeat center center fixed;
+            background-size: cover;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            margin: 0;
+            overflow: hidden; /* Evita el scroll inicial */
+        }
+
+        /* Efecto de desenfoque oscuro para el fondo */
+        body::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: rgba(0, 0, 0, 0.5); /* Oscurece el fondo */
+            backdrop-filter: blur(5px); /* Aplica un desenfoque */
+            z-index: 0;
+        }
+
+        /* Estilos para la ventana */
+        .window {
+            width: 600px;
+            z-index: 1;
+            box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.3);
+        }
+
+        /* Centrar y estilizar el contenido de la ventana */
+        .window-body {
+            text-align: center;
+            padding: 15px;
+        }
+
+        /* Ocultar botones de la barra de título */
+        .title-bar-controls {
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <div class="window">
+        <div class="title-bar">
+            <div class="title-bar-text">NotFound : Info</div>
+        </div>
+        <div class="window-body">
+            <iframe width="560" height="315" 
+                src="https://www.youtube.com/embed/M3auksvyJeA?si=KIzBxtUVcviRKMKj&amp;controls=0" 
+                title="YouTube video player" frameborder="0" 
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" 
+                referrerpolicy="strict-origin-when-cross-origin" allowfullscreen>
+            </iframe>
+        </div>
+    </div>
+
+    <script>
+        // Detecta el desplazamiento hacia abajo y redirige a la URL especificada
+        window.addEventListener('scroll', function() {
+            window.location.href = "https://wincym32.github.io/NotFound/source/html/html-info.html";
+        });
+    </script>
+</body>
+</html>
