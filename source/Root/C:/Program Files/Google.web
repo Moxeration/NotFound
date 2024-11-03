@@ -1,7 +1,9 @@
 {
     "nombre": "Google",
     "icono": "https://github.com/WINCYM32/NotFound/blob/gh-pages/source/assets/icons/Apps/Chrome_OS.png?raw=true",
-    "tangible": false,
-    "tipo": "acceso_directo",
-    "url": "https://www.google.com"
+    "tangible": true,
+    "tipo": "Direct_Access",
+    "url": "https://www.google.com",
+    "width": 300,
+    "height": 200
 }
