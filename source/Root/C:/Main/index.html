@@ -1,12 +1,12 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>NotFound: Main</title>
-    <link rel="stylesheet" href="https://unpkg.com/7.css"> <!-- Link to 7.css -->
+    <link rel="stylesheet" href="https://unpkg.com/7.css">
     <style>
-        /* Background configuration */
+        /* Configuración del fondo */
         body {
             margin: 0;
             padding: 0;
@@ -22,7 +22,7 @@
             color: white;
         }
 
-        /* Style for desktop icons */
+        /* Estilo para los íconos de documentos */
         .desktop-icon {
             width: 80px;
             text-align: center;
@@ -43,9 +43,59 @@
 </head>
 <body>
 
-    <!-- Container for desktop icons -->
+    <!-- Contenedor para los iconos del escritorio -->
     <div id="desktop"></div>
 
-    <script src="script.js"></script> <!-- Link to your JavaScript file -->
+    <script>
+        // Simulación de carga de archivos JSON desde el directorio "Program Files"
+        const archivosJson = [
+            {
+                "nombre": "Google",
+                "icono": "https://github.com/WINCYM32/NotFound/blob/gh-pages/source/assets/icons/Apps/Chrome_OS.png?raw=true",
+                "tangible": true,
+                "tipo": "Direct_Access",
+                "url": "https://www.google.com",
+                "width": 300,
+                "height": 200
+            },
+            {
+                "nombre": "Editor",
+                "icono": "https://via.placeholder.com/48?text=E",
+                "tangible": true,
+                "tipo": "Direct_Access",
+                "url": "https://www.example.com/editor",
+                "width": 400,
+                "height": 300
+            }
+            // Puedes agregar más JSON simulados aquí
+        ];
+
+        // Función para crear iconos en el escritorio
+        function crearIcono(data) {
+            const icono = document.createElement('div');
+            icono.classList.add('desktop-icon');
+
+            const enlace = document.createElement('a');
+            enlace.href = data.url;
+            enlace.target = '_blank';
+            enlace.title = data.nombre;
+
+            const imagen = document.createElement('img');
+            imagen.src = data.icono;
+            imagen.alt = `Icono de ${data.nombre}`;
+
+            const nombre = document.createElement('p');
+            nombre.textContent = data.nombre;
+
+            enlace.appendChild(imagen);
+            enlace.appendChild(nombre);
+            icono.appendChild(enlace);
+
+            document.getElementById('desktop').appendChild(icono);
+        }
+
+        // Iterar sobre cada archivo JSON para crear iconos
+        archivosJson.forEach(crearIcono);
+    </script>
 </body>
 </html>
