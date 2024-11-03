@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<link rel="stylesheet" href="https://unpkg.com/7.css">
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" user-scalable="no"> <!-- Deshabilitar zoom -->
+    <title>Error 404</title> <!-- Título de la página en inglés -->
+    <link rel="icon" href="https://github.com/WINCYM32/NotFound/blob/gh-pages/source/assets/icons/vista/Alert/Alert003.ico?raw=true" type="image/gif"> <!-- Icono de la pestaña -->
+    <style>
+        body {
+            margin: 0;
+            height: 100vh;
+            background: url('https://github.com/WINCYM32/NotFound/blob/gh-pages/source/assets/backgrounds/background_cli.bmp?raw=true') no-repeat center center fixed; /* Fondo de la página */
+            background-size: cover;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: black; /* Texto negro para contraste */
+            cursor: url('https://github.com/WINCYM32/NotFound/raw/refs/heads/gh-pages/source/assets/cursors/Mouse.cur'), auto; /* Cambia el cursor a Mouse.cur */
+            overflow: hidden; /* Deshabilitar el scroll */
+            user-select: none; /* Deshabilitar selección de texto */
+        }
+
+        .window {
+            background-color: white; /* Fondo de la ventana blanco */
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+            overflow: hidden;
+            max-width: 300px; /* Ancho máximo de la ventana */
+            text-align: center; /* Alinear texto al centro */
+        }
+
+        .title-bar {
+            padding: 10px;
+            background-color: #f0f0f0; /* Color del fondo de la barra de título */
+            border-bottom: 1px solid #ddd; /* Línea inferior de la barra de título */
+            display: flex; /* Flexbox para alinear icono y texto */
+            align-items: center; /* Centrar verticalmente */
+        }
+
+        .title-bar-text {
+            font-weight: bold;
+            flex-grow: 1; /* Ocupa el espacio restante */
+        }
+
+        .window-body {
+            padding: 20px;
+        }
+
+        .redirect {
+            font-size: 24px;
+            cursor: pointer;
+            color: #ffcc00; /* Color para el emoji */
+        }
+
+        .icon {
+            width: 24px; /* Ajusta el tamaño del icono */
+            height: 24px;
+            margin-right: 10px; /* Espacio entre el icono y el texto */
+        }
+
+        .emoji {
+            cursor: url('https://github.com/WINCYM32/NotFound/raw/refs/heads/gh-pages/source/assets/cursors/Link.cur'), auto; /* Cambia el cursor al pasar sobre el emoji */
+        }
+    </style>
+</head>
+<body oncontextmenu="return false;"> <!-- Deshabilitar menú contextual -->
+    <div class="window active">
+        <div class="title-bar">
+            <img src="https://github.com/WINCYM32/NotFound/blob/gh-pages/source/assets/icons/warning.gif?raw=true" alt="Warning Icon" class="icon"> <!-- Icono en la barra de título -->
+            <div class="title-bar-text">Error Code: 103 (Maintenance)</div> <!-- Título de la ventana -->
+        </div>
+        <div class="window-body has-space">
+            <p>It appears that the page has currently been placed under maintenance, in the meantime you can browse on Google  ---> 
+                <a href="https://wincym32.github.io/NotFound/source/assets/html/Google.html" class="redirect">
+                    <span id="random-emoji" class="emoji"></span> <!-- Clase emoji para el cursor -->
+                </a>
+            </p>
+        </div>
+    </div>
+
+    <script>
+        // Deshabilitar el zoom con las teclas de flecha y +/-
+        window.addEventListener('keydown', function(event) {
+            if (event.key === 'ArrowUp' || event.key === 'ArrowDown' || 
+                event.key === 'ArrowLeft' || event.key === 'ArrowRight' || 
+                event.key === '+' || event.key === '-') {
+                event.preventDefault();
+            }
+        });
+
+        // Array de emojis
+        const emojis = ['🚫', '⚠️', '💿', '😯', '🙁', '📂', '💻', '😐', '⚙', '🔧'];
+
+        // Función para seleccionar un emoji aleatorio
+        function getRandomEmoji() {
+            const randomIndex = Math.floor(Math.random() * emojis.length);
+            return emojis[randomIndex];
+        }
+
+        // Asignar el emoji aleatorio al elemento en la página
+        document.getElementById('random-emoji').innerText = getRandomEmoji();
+    </script>
+</body>
+</html>
