@@ -2,11 +2,11 @@
 
 // Function to load JSON files from the server
 async function loadJsonFiles() {
-    const response = await fetch('/path/to/your/directory/program-files/'); // Change this path to your server directory containing the JSON files
+    const response = await fetch('https://github.com/WINCYM32/NotFound/tree/0aa9b523d4a51d7ddec9b97cf2c2c140851d3140/source/Root/C%3A/Program%20Files'); // Change this path to your server directory containing the JSON files
     const files = await response.json(); // The server should return a list of JSON files.
 
     files.forEach(async (file) => {
-        const fileResponse = await fetch(`/path/to/your/directory/program-files/${file}`);
+        const fileResponse = await fetch(`https://github.com/WINCYM32/NotFound/tree/0aa9b523d4a51d7ddec9b97cf2c2c140851d3140/source/Root/C%3A/users/Default/Desktop${file}`);
         const data = await fileResponse.json();
         createIcon(data);
     });
