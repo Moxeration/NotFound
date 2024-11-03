@@ -1,11 +1,12 @@
 <!DOCTYPE html>
-<html lang="es">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>NotFound: Main</title>
+    <link rel="stylesheet" href="https://unpkg.com/7.css"> <!-- Link to 7.css -->
     <style>
-        /* Configuración del fondo */
+        /* Background configuration */
         body {
             margin: 0;
             padding: 0;
@@ -14,9 +15,37 @@
             background-size: cover;
             background-position: center;
             background-repeat: no-repeat;
+            display: flex;
+            flex-wrap: wrap;
+            align-items: flex-start;
+            padding: 20px;
+            color: white;
+        }
+
+        /* Style for desktop icons */
+        .desktop-icon {
+            width: 80px;
+            text-align: center;
+            margin: 10px;
+            cursor: pointer;
+        }
+
+        .desktop-icon img {
+            width: 48px;
+            height: 48px;
+        }
+
+        .desktop-icon p {
+            font-size: 12px;
+            margin-top: 5px;
         }
     </style>
 </head>
 <body>
+
+    <!-- Container for desktop icons -->
+    <div id="desktop"></div>
+
+    <script src="https://raw.githubusercontent.com/WINCYM32/NotFound/refs/heads/gh-pages/source/Root/C%3A/Program Files/Script.js"></script> <!-- Link to your JavaScript file -->
 </body>
 </html>
