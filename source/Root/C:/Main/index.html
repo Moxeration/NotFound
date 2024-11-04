@@ -10,20 +10,22 @@
             margin: 0;
             padding: 0;
             height: 100vh;
-            background-image: url('https://github.com/WINCYM32/NotFound/blob/gh-pages/source/assets/backgrounds/img11.png?raw=true');
+            background-image: url('https://raw.githubusercontent.com/WINCYM32/NotFound/refs/heads/gh-pages/source/assets/backgrounds/img4.jpg');
             background-size: cover;
             background-position: center;
             display: flex;
             justify-content: center;
             align-items: center;
             color: white;
+            filter: blur(5px); /* Efecto de desenfoque */
         }
         #desktop {
             display: flex;
             flex-wrap: wrap;
             gap: 10px;
             padding: 20px;
-            max-width: 800px;
+            position: relative; /* Asegura que el escritorio esté posicionado correctamente */
+            filter: blur(0); /* Sin desenfoque en el escritorio */
         }
         .desktop-icon {
             width: 80px;
@@ -98,8 +100,13 @@
         }
         iframe {
             width: 100%;
-            height: 100%;
+            height: calc(100% - 30px); /* Ajuste para la barra de búsqueda */
             border: none;
+        }
+        .info {
+            color: blue;
+            margin-top: 10px;
+            text-align: center;
         }
     </style>
 </head>
@@ -193,7 +200,7 @@
                 searchBox.classList.add('searchbox');
                 const searchInput = document.createElement('input');
                 searchInput.type = 'search';
-                searchInput.placeholder = 'Search';
+                searchInput.placeholder = 'Enter a URL to start';
                 const searchButton = document.createElement('button');
                 searchButton.innerHTML = '🔍';
                 searchButton.onclick = () => {
@@ -207,6 +214,15 @@
                 const iframe = document.createElement('iframe');
                 iframe.src = 'https://www.google.com';
                 windowBody.appendChild(iframe);
+
+                const infoLink = document.createElement('div');
+                infoLink.classList.add('info');
+                infoLink.innerHTML = '<a href="#" style="color: blue;">More Information</a>';
+                infoLink.querySelector('a').onclick = () => {
+                    // Configura la redirección aquí
+                    window.open('https://www.example.com', '_blank'); // Cambia la URL según sea necesario
+                };
+                windowBody.appendChild(infoLink);
             } else {
                 windowBody.innerHTML = data.content;
             }
