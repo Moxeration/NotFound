@@ -24,9 +24,7 @@
             gap: 10px;
             padding: 20px;
             max-width: 800px;
-            position: absolute; /* Asegurarse de que los iconos estén en el fondo */
-            top: 0;
-            left: 0;
+            position: relative; /* Posicionar relativo para el fondo del escritorio */
         }
         .desktop-icon {
             width: 80px;
@@ -76,13 +74,16 @@
             flex: 1;
             display: flex;
             flex-direction: column;
-            position: relative;
-            overflow: hidden;
+            background: url('https://raw.githubusercontent.com/WINCYM32/NotFound/refs/heads/gh-pages/source/assets/backgrounds/img4.jpg') no-repeat center center; 
+            background-size: cover; 
+            filter: blur(5px); /* Aplicar el desenfoque al fondo */
+            position: relative; /* Asegura que el contenido dentro esté en el contexto correcto */
+            padding: 20px;
         }
         .searchbox {
             display: flex;
             padding: 5px;
-            background: #444;
+            background: rgba(0, 0, 0, 0.5); /* Fondo semi-transparente para la barra de búsqueda */
             align-items: center;
         }
         .searchbox input {
@@ -102,40 +103,22 @@
             cursor: pointer;
         }
         .info {
-            color: lightblue;
+            color: #00f; /* Color azul para el texto de información */
+            cursor: pointer;
             margin-top: 10px;
-            text-align: center;
         }
-        iframe {
-            width: 100%;
-            height: calc(100% - 50px); /* Ajustar para dejar espacio para la barra de búsqueda */
-            border: none;
-            background: url('https://raw.githubusercontent.com/WINCYM32/NotFound/refs/heads/gh-pages/source/assets/backgrounds/img4.jpg') no-repeat center center; /* Fondo de la ventana */
-            background-size: cover;
-            filter: blur(5px); /* Aplicar desenfoque al fondo */
-        }
-        .blur-content {
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            color: black; /* Texto de la superposición */
-            z-index: 1; /* Asegurarse de que esté por encima del iframe */
-            padding: 20px;
-            text-align: center;
+        .info:hover {
+            text-decoration: underline;
         }
     </style>
 </head>
 <body>
 
+    <!-- Contenedor para los iconos del escritorio -->
     <div id="desktop"></div>
 
     <script>
+        // Definición de los archivos JSON
         const archivosJson = [
             {
                 "nombre": "Google",
@@ -158,6 +141,7 @@
             }
         ];
 
+        // Crear iconos en el escritorio
         function crearIcono(data) {
             const icono = document.createElement('div');
             icono.classList.add('desktop-icon');
@@ -177,6 +161,7 @@
             document.getElementById('desktop').appendChild(icono);
         }
 
+        // Abrir ventana según los datos del JSON
         function abrirVentana(data) {
             const ventana = document.createElement('div');
             ventana.classList.add('window');
@@ -217,7 +202,7 @@
                 searchBox.classList.add('searchbox');
                 const searchInput = document.createElement('input');
                 searchInput.type = 'search';
-                searchInput.placeholder = 'Enter a URL to start';
+                searchInput.placeholder = 'Enter a URL to start'; // Texto de la barra de búsqueda
                 const searchButton = document.createElement('button');
                 searchButton.innerHTML = '🔍';
                 searchButton.onclick = () => {
@@ -230,16 +215,17 @@
 
                 const iframe = document.createElement('iframe');
                 iframe.src = 'https://www.google.com';
-
-                // Agregar la superposición con el texto de información
-                const blurContent = document.createElement('div');
-                blurContent.classList.add('blur-content');
-                blurContent.innerHTML = `
-                    <p style="font-size: 16px;">Enter a URL to start</p>
-                    <p class="info">More information</p>
-                `;
-                windowBody.appendChild(blurContent);
                 windowBody.appendChild(iframe);
+
+                // Información adicional
+                const info = document.createElement('div');
+                info.classList.add('info');
+                info.innerHTML = 'More information';
+                info.onclick = () => {
+                    // Aquí puedes redirigir a la URL que configures
+                    window.open('https://example.com', '_blank'); // Cambia esta URL según sea necesario
+                };
+                windowBody.appendChild(info);
             } else {
                 windowBody.innerHTML = data.content;
             }
@@ -263,4 +249,19 @@
 
                     document.addEventListener('mousemove', onMouseMove);
 
-                    titleBar.onmouseup = function ()
+                    titleBar.onmouseup = function () {
+                        document.removeEventListener('mousemove', onMouseMove);
+                        titleBar.onmouseup = null;
+                    };
+                };
+
+                titleBar.ondragstart = function () {
+                    return false;
+                };
+            }
+        }
+
+        archivosJson.forEach(crearIcono);
+    </script>
+</body>
+</html>
