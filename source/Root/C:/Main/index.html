@@ -6,7 +6,6 @@
     <title>NotFound: Main</title>
     <link rel="stylesheet" href="https://unpkg.com/7.css">
     <style>
-        /* Configuración del fondo */
         body {
             margin: 0;
             padding: 0;
@@ -22,7 +21,6 @@
             color: white;
         }
 
-        /* Estilo para los íconos de documentos */
         .desktop-icon {
             width: 80px;
             text-align: center;
@@ -40,13 +38,8 @@
             margin-top: 5px;
         }
 
-        /* Estilo para la ventana modal */
         .modal {
             position: absolute;
-            top: 50px;
-            left: 50px;
-            width: 300px;
-            max-width: 90%;
             background-color: rgba(255, 255, 255, 0.9);
             border: 2px solid #ccc;
             box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.5);
@@ -98,21 +91,27 @@
     <div id="desktop"></div>
 
     <script>
-        // Simulación de carga de archivos JSON
+        // Archivos JSON con las nuevas propiedades
         const archivosJson = [
             {
                 "nombre": "Google",
                 "icono": "https://github.com/WINCYM32/NotFound/blob/gh-pages/source/assets/icons/Apps/Chrome_OS.png?raw=true",
                 "tangible": true,
                 "tipo": "Direct_Access",
-                "content": "<p>Welcome to Google! Here you could browse the web.</p>"
+                "content": "<p>Welcome to Google! Here you could browse the web.</p>",
+                "width": 300,
+                "height": 200,
+                "center": true
             },
             {
                 "nombre": "Editor",
                 "icono": "https://via.placeholder.com/48?text=E",
                 "tangible": false,
                 "tipo": "Direct_Access",
-                "content": "<p>This is an editor where you can create or modify text files.</p>"
+                "content": "<p>This is an editor where you can create or modify text files.</p>",
+                "width": 400,
+                "height": 300,
+                "center": false
             }
         ];
 
@@ -174,6 +173,19 @@
             modal.appendChild(titleBar);
             modal.appendChild(windowBody);
             document.body.appendChild(modal);
+
+            // Establecer dimensiones
+            modal.style.width = `${data.width}px`;
+            modal.style.height = `${data.height}px`;
+
+            // Posicionar en el centro o de manera aleatoria
+            if (data.center) {
+                modal.style.left = `calc(50% - ${data.width / 2}px)`;
+                modal.style.top = `calc(50% - ${data.height / 2}px)`;
+            } else {
+                modal.style.left = `${Math.random() * (window.innerWidth - data.width)}px`;
+                modal.style.top = `${Math.random() * (window.innerHeight - data.height)}px`;
+            }
 
             activeWindows++;
 
