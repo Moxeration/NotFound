@@ -1,0 +1,29 @@
+{
+    "Apps": [
+        {
+            "nombre": "Google",
+            "icono": "https://github.com/WINCYM32/NotFound/blob/gh-pages/source/assets/icons/Apps/Chrome_OS.png?raw=true",
+            "tangible": true,
+            "tipo": "Web_App",
+            "contentUrl": "https://duckduckgo.com/",
+            "error": {
+                "call": "https://raw.githubusercontent.com/WINCYM32/NotFound/refs/heads/gh-pages/source/Root/C%3A/Program%20Files/sys.json",
+                "MessageBox": "Sorry, we're having trouble connecting to Google right now, please try again in a few days and check.",
+                "MessageBox_Alert": "If there is a connection issue, an alert message will be displayed."
+            },
+            "width": 700,
+            "height": 500,
+            "center": true
+        },
+        {
+            "nombre": "Editor",
+            "icono": "https://via.placeholder.com/48?text=E",
+            "tangible": false,
+            "tipo": "Direct_Access",
+            "content": "<p>This is an editor where you can create or modify text files.</p>",
+            "width": 400,
+            "height": 300,
+            "center": false
+        }
+    ]
+}
