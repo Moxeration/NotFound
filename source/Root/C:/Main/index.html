@@ -20,68 +20,51 @@
             padding: 20px;
             color: white;
         }
-
         .desktop-icon {
             width: 80px;
             text-align: center;
             margin: 10px;
             cursor: pointer;
         }
-
         .desktop-icon img {
             width: 48px;
             height: 48px;
         }
-
         .desktop-icon p {
             font-size: 12px;
             margin-top: 5px;
         }
-
-        .modal {
+        .window {
             position: absolute;
-            background-color: rgba(255, 255, 255, 0.9);
-            border: 2px solid #ccc;
-            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.5);
+            background: rgba(0, 0, 0, 0.8);
+            border: 1px solid #999;
+            border-radius: 8px;
+            overflow: hidden;
             z-index: 10;
-            cursor: default;
         }
-
         .title-bar {
             display: flex;
-            align-items: center;
-            background-color: #444;
-            color: white;
+            justify-content: space-between;
             padding: 5px;
-            font-weight: bold;
+            background: #333;
+            color: white;
             cursor: move;
         }
-
+        .title-bar-text {
+            display: flex;
+            align-items: center;
+        }
         .title-bar-controls button {
-            background: #666;
+            background: none;
             border: none;
-            color: white;
-            width: 20px;
-            height: 20px;
             cursor: pointer;
-            margin-left: auto;
+            color: white;
+            padding: 0 5px;
             font-weight: bold;
-            border-radius: 3px;
         }
-
         .window-body {
-            padding: 15px;
-            color: black;
-        }
-
-        .logo-icon {
-            width: 20px;
-            height: 20px;
-            margin-right: 8px;
-        }
-
-        .draggable-false {
-            cursor: default !important;
+            padding: 10px;
+            color: white;
         }
     </style>
 </head>
@@ -91,16 +74,16 @@
     <div id="desktop"></div>
 
     <script>
-        // Archivos JSON con las nuevas propiedades
+        // Definición de los archivos JSON
         const archivosJson = [
             {
                 "nombre": "Google",
                 "icono": "https://github.com/WINCYM32/NotFound/blob/gh-pages/source/assets/icons/Apps/Chrome_OS.png?raw=true",
                 "tangible": true,
-                "tipo": "Direct_Access",
-                "content": "<p>Welcome to Google! Here you could browse the web.</p>",
-                "width": 300,
-                "height": 200,
+                "tipo": "Web_App",
+                "content": "<iframe src='https://www.google.com' width='100%' height='100%' frameborder='0'></iframe>",
+                "width": 700,
+                "height": 400,
                 "center": true
             },
             {
@@ -122,99 +105,89 @@
 
             const imagen = document.createElement('img');
             imagen.src = data.icono;
-            imagen.alt = `Icon of ${data.nombre}`;
+            imagen.alt = `Icono de ${data.nombre}`;
+            imagen.title = data.nombre;
 
             const nombre = document.createElement('p');
             nombre.textContent = data.nombre;
 
             icono.appendChild(imagen);
             icono.appendChild(nombre);
-            icono.onclick = () => openModal(data); // Evento de clic
+            icono.addEventListener('click', () => abrirVentana(data));
 
             document.getElementById('desktop').appendChild(icono);
         }
 
-        let activeWindows = 0;
+        // Abrir ventana según los datos del JSON
+        function abrirVentana(data) {
+            const ventana = document.createElement('div');
+            ventana.classList.add('window');
+            ventana.style.width = `${data.width}px`;
+            ventana.style.height = `${data.height}px`;
 
-        // Mostrar la ventana modal con el contenido del icono
-        function openModal(data) {
-            if (activeWindows >= 3) return; // Limitar a 3 ventanas simultáneas
-
-            const modal = document.createElement('div');
-            modal.classList.add('modal');
-            if (!data.tangible) modal.classList.add('draggable-false');
+            if (data.center) {
+                ventana.style.left = `calc(50% - ${data.width / 2}px)`;
+                ventana.style.top = `calc(50% - ${data.height / 2}px)`;
+            } else {
+                ventana.style.left = `${Math.random() * (window.innerWidth - data.width)}px`;
+                ventana.style.top = `${Math.random() * (window.innerHeight - data.height)}px`;
+            }
 
             const titleBar = document.createElement('div');
             titleBar.classList.add('title-bar');
+            
+            const titleText = document.createElement('div');
+            titleText.classList.add('title-bar-text');
+            titleText.innerHTML = `<img src="${data.icono}" width="16" height="16" style="margin-right: 5px;"> ${data.nombre}`;
 
-            const logoIcon = document.createElement('img');
-            logoIcon.src = data.icono;
-            logoIcon.classList.add('logo-icon');
-            logoIcon.alt = 'Logo';
-
-            const titleText = document.createElement('span');
-            titleText.textContent = data.nombre;
-
+            const titleControls = document.createElement('div');
+            titleControls.classList.add('title-bar-controls');
             const closeButton = document.createElement('button');
-            closeButton.textContent = 'X';
-            closeButton.onclick = () => {
-                modal.remove();
-                activeWindows--;
-            };
+            closeButton.innerHTML = 'X';
+            closeButton.onclick = () => ventana.remove();
+            titleControls.appendChild(closeButton);
 
-            titleBar.appendChild(logoIcon);
             titleBar.appendChild(titleText);
-            titleBar.appendChild(closeButton);
+            titleBar.appendChild(titleControls);
+            ventana.appendChild(titleBar);
 
             const windowBody = document.createElement('div');
             windowBody.classList.add('window-body');
             windowBody.innerHTML = data.content;
+            ventana.appendChild(windowBody);
 
-            modal.appendChild(titleBar);
-            modal.appendChild(windowBody);
-            document.body.appendChild(modal);
+            document.body.appendChild(ventana);
 
-            // Establecer dimensiones
-            modal.style.width = `${data.width}px`;
-            modal.style.height = `${data.height}px`;
+            // Permitir arrastrar la ventana si es tangible
+            if (data.tangible) {
+                titleBar.onmousedown = function (event) {
+                    let shiftX = event.clientX - ventana.getBoundingClientRect().left;
+                    let shiftY = event.clientY - ventana.getBoundingClientRect().top;
 
-            // Posicionar en el centro o de manera aleatoria
-            if (data.center) {
-                modal.style.left = `calc(50% - ${data.width / 2}px)`;
-                modal.style.top = `calc(50% - ${data.height / 2}px)`;
-            } else {
-                modal.style.left = `${Math.random() * (window.innerWidth - data.width)}px`;
-                modal.style.top = `${Math.random() * (window.innerHeight - data.height)}px`;
-            }
-
-            activeWindows++;
-
-            if (data.tangible) makeDraggable(modal);
-        }
-
-        // Función para hacer la ventana draggable
-        function makeDraggable(element) {
-            let isDragging = false;
-            let offsetX, offsetY;
-
-            element.querySelector('.title-bar').onmousedown = (e) => {
-                isDragging = true;
-                offsetX = e.clientX - element.getBoundingClientRect().left;
-                offsetY = e.clientY - element.getBoundingClientRect().top;
-                document.onmousemove = (e) => {
-                    if (isDragging) {
-                        element.style.left = `${e.clientX - offsetX}px`;
-                        element.style.top = `${e.clientY - offsetY}px`;
+                    function moveAt(pageX, pageY) {
+                        ventana.style.left = pageX - shiftX + 'px';
+                        ventana.style.top = pageY - shiftY + 'px';
                     }
+
+                    function onMouseMove(event) {
+                        moveAt(event.pageX, event.pageY);
+                    }
+
+                    document.addEventListener('mousemove', onMouseMove);
+
+                    titleBar.onmouseup = function () {
+                        document.removeEventListener('mousemove', onMouseMove);
+                        titleBar.onmouseup = null;
+                    };
                 };
-                document.onmouseup = () => {
-                    isDragging = false;
-                    document.onmousemove = null;
+
+                titleBar.ondragstart = function () {
+                    return false;
                 };
-            };
+            }
         }
 
-        // Iterar sobre cada archivo JSON para crear iconos
+        // Crear los iconos a partir del JSON
         archivosJson.forEach(crearIcono);
     </script>
 </body>
