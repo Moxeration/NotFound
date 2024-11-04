@@ -6,28 +6,34 @@
     <title>NotFound: Main</title>
     <link rel="stylesheet" href="https://unpkg.com/7.css">
     <style>
-        /* Configuración del fondo */
+        /* Configuración del fondo original */
         body {
             margin: 0;
             padding: 0;
             height: 100vh;
-            background-image: url('https://raw.githubusercontent.com/WINCYM32/NotFound/refs/heads/gh-pages/source/assets/backgrounds/img4.jpg');
+            background-image: url('https://raw.githubusercontent.com/WINCYM32/NotFound/refs/heads/gh-pages/source/assets/backgrounds/img11.png');
             background-size: cover;
             background-position: center;
             background-repeat: no-repeat;
             display: flex;
+            flex-direction: column;
             align-items: flex-start;
-            padding: 20px;
             color: white;
         }
 
-        /* Estilo para los íconos de documentos */
+        /* Contenedor del escritorio para organizar los iconos */
+        #desktop {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, 100px);
+            gap: 20px;
+            padding: 20px;
+        }
+
+        /* Estilo para los iconos de documentos */
         .desktop-icon {
             width: 80px;
             text-align: center;
-            margin: 10px;
             cursor: pointer;
-            position: relative; /* Para permitir el posicionamiento */
         }
 
         .desktop-icon img {
@@ -39,82 +45,66 @@
             font-size: 12px;
             margin-top: 5px;
         }
-        
-        /* Contenedor de la ventana */
-        .background {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            pointer-events: none; /* Evitar interacciones con el fondo */
-        }
 
+        /* Estilo para la ventana emergente */
         .window {
-            position: absolute;
-            background: rgba(255, 255, 255, 0.9);
-            border: 1px solid #ccc;
-            border-radius: 5px;
-            overflow: hidden;
-            pointer-events: auto; /* Permitir interacciones con la ventana */
+            position: fixed;
+            border: 2px solid #444;
+            background-color: white;
+            box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.5);
+            display: flex;
+            flex-direction: column;
         }
 
         .title-bar {
-            background: #0078d4;
+            background: #333;
             color: white;
-            padding: 5px;
             display: flex;
             justify-content: space-between;
-            align-items: center;
-        }
-
-        .title-bar-controls button {
-            background: transparent;
-            border: none;
-            color: white;
-            cursor: pointer;
-            margin-left: 5px;
+            padding: 5px;
+            font-weight: bold;
         }
 
         .window-body {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
             padding: 10px;
         }
 
         .searchbox {
-            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            padding-bottom: 10px;
         }
 
         .searchbox input {
             padding: 5px;
-            width: calc(100% - 50px);
+            width: calc(100% - 30px);
         }
 
-        .searchbox button {
-            padding: 5px;
-        }
-        
         iframe {
-            border: none;
+            flex: 1;
             width: 100%;
-            height: calc(100% - 40px); /* Ajustar la altura del iframe */
+            border: none;
         }
     </style>
 </head>
 <body>
 
     <!-- Contenedor para los iconos del escritorio -->
-    <div id="desktop">
-        <!-- Los iconos se generarán aquí -->
-    </div>
+    <div id="desktop"></div>
 
     <script>
-        // Simulación de carga de archivos JSON
+        // JSON con configuraciones de iconos
         const archivosJson = [
             {
                 "nombre": "Google",
                 "icono": "https://github.com/WINCYM32/NotFound/blob/gh-pages/source/assets/icons/Apps/Chrome_OS.png?raw=true",
                 "tangible": true,
                 "tipo": "Web_App",
+                "contentUrl": "https://wincym32.github.io/NotFound/html/Cgoogle.html",
                 "width": 700,
                 "height": 500,
                 "center": true
@@ -132,92 +122,99 @@
         ];
 
         // Función para crear iconos en el escritorio
-        function crearIcono(data, index) {
+        function crearIcono(data) {
             const icono = document.createElement('div');
             icono.classList.add('desktop-icon');
-            icono.style.top = `${index * 60}px`; // Posicionar en diagonal
-
-            const enlace = document.createElement('a');
-            enlace.href = "#"; // Prevenir redirección
-            enlace.onclick = function() {
-                abrirVentana(data);
-                return false; // Prevenir el comportamiento por defecto
-            };
-            enlace.title = data.nombre;
 
             const imagen = document.createElement('img');
             imagen.src = data.icono;
             imagen.alt = `Icono de ${data.nombre}`;
+            icono.appendChild(imagen);
 
             const nombre = document.createElement('p');
             nombre.textContent = data.nombre;
+            icono.appendChild(nombre);
 
-            enlace.appendChild(imagen);
-            enlace.appendChild(nombre);
-            icono.appendChild(enlace);
-
+            icono.addEventListener('click', () => abrirVentana(data));
             document.getElementById('desktop').appendChild(icono);
         }
 
-        // Función para abrir una ventana
+        // Función para abrir la ventana
         function abrirVentana(data) {
+            const ventana = document.createElement('div');
+            ventana.classList.add('window');
+            ventana.style.width = `${data.width}px`;
+            ventana.style.height = `${data.height}px`;
+            
+            // Colocar la ventana en el centro si está configurado
+            if (data.center) {
+                ventana.style.left = `calc(50% - ${data.width / 2}px)`;
+                ventana.style.top = `calc(50% - ${data.height / 2}px)`;
+            } else {
+                ventana.style.left = `${Math.random() * (window.innerWidth - data.width)}px`;
+                ventana.style.top = `${Math.random() * (window.innerHeight - data.height)}px`;
+            }
+
+            // Barra de título
+            const barraTitulo = document.createElement('div');
+            barraTitulo.classList.add('title-bar');
+            barraTitulo.innerHTML = `
+                <span>${data.nombre}</span>
+                <button onclick="cerrarVentana(this)">✖</button>
+            `;
+            ventana.appendChild(barraTitulo);
+
+            // Cuerpo de la ventana
+            const cuerpoVentana = document.createElement('div');
+            cuerpoVentana.classList.add('window-body');
+
+            // Contenido de la ventana
+            if (data.tipo === "Web_App") {
+                const searchbox = document.createElement('div');
+                searchbox.classList.add('searchbox');
+                searchbox.innerHTML = `
+                    <input type="search" placeholder="Enter a URL to start">
+                    <button aria-label="search"></button>
+                `;
+                cuerpoVentana.appendChild(searchbox);
+
+                const iframe = document.createElement('iframe');
+                iframe.src = data.contentUrl || '';
+                cuerpoVentana.appendChild(iframe);
+            } else {
+                cuerpoVentana.innerHTML = data.content || "<p>No content available</p>";
+            }
+
+            ventana.appendChild(cuerpoVentana);
+            document.body.appendChild(ventana);
+
+            // Hacer tangible la ventana si está configurado
             if (data.tangible) {
-                const ventana = document.createElement('div');
-                ventana.classList.add('window');
-                ventana.style.width = data.width + 'px';
-                ventana.style.height = data.height + 'px';
-                ventana.style.left = data.center ? '50%' : `${Math.random() * (window.innerWidth - data.width)}px`;
-                ventana.style.top = data.center ? '50%' : `${Math.random() * (window.innerHeight - data.height)}px`;
-                ventana.style.transform = data.center ? 'translate(-50%, -50%)' : 'none';
-
-                const titleBar = document.createElement('div');
-                titleBar.classList.add('title-bar');
-                const titleText = document.createElement('div');
-                titleText.classList.add('title-bar-text');
-                titleText.textContent = data.nombre;
-                titleBar.appendChild(titleText);
-
-                const controls = document.createElement('div');
-                controls.classList.add('title-bar-controls');
-                const closeButton = document.createElement('button');
-                closeButton.textContent = '✖';
-                closeButton.onclick = () => ventana.remove(); // Cerrar ventana
-                controls.appendChild(closeButton);
-                titleBar.appendChild(controls);
-                ventana.appendChild(titleBar);
-
-                const windowBody = document.createElement('div');
-                windowBody.classList.add('window-body');
-
-                if (data.tipo === "Web_App") {
-                    const searchbox = document.createElement('div');
-                    searchbox.classList.add('searchbox');
-                    const input = document.createElement('input');
-                    input.type = 'search';
-                    input.placeholder = 'Enter a URL to start';
-                    const searchButton = document.createElement('button');
-                    searchButton.textContent = 'Search';
-                    searchButton.onclick = function() {
-                        const url = input.value || 'https://wincym32.github.io/NotFound/html/Cgoogle.html'; // URL predeterminada
-                        const iframe = document.createElement('iframe');
-                        iframe.src = url;
-                        windowBody.innerHTML = ''; // Limpiar el contenido anterior
-                        windowBody.appendChild(searchbox);
-                        windowBody.appendChild(iframe);
-                    };
-                    searchbox.appendChild(input);
-                    searchbox.appendChild(searchButton);
-                    windowBody.appendChild(searchbox);
-                } else if (data.tipo === "Direct_Access") {
-                    windowBody.innerHTML = data.content;
-                }
-
-                ventana.appendChild(windowBody);
-                document.body.appendChild(ventana);
+                ventana.style.cursor = 'move';
+                ventana.addEventListener('mousedown', (e) => arrastrarVentana(e, ventana));
             }
         }
 
-        // Iterar sobre cada archivo JSON para crear iconos
+        // Función para cerrar ventana
+        function cerrarVentana(button) {
+            button.closest('.window').remove();
+        }
+
+        // Función para arrastrar la ventana
+        function arrastrarVentana(event, ventana) {
+            let shiftX = event.clientX - ventana.getBoundingClientRect().left;
+            let shiftY = event.clientY - ventana.getBoundingClientRect().top;
+
+            function moverVentana(e) {
+                ventana.style.left = `${e.clientX - shiftX}px`;
+                ventana.style.top = `${e.clientY - shiftY}px`;
+            }
+
+            document.addEventListener('mousemove', moverVentana);
+            document.addEventListener('mouseup', () => document.removeEventListener('mousemove', moverVentana), { once: true });
+        }
+
+        // Crear todos los iconos en el escritorio
         archivosJson.forEach(crearIcono);
     </script>
 </body>
