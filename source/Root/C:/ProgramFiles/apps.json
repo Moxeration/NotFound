@@ -5,6 +5,8 @@
             "icono": "https://github.com/WINCYM32/NotFound/blob/gh-pages/source/assets/icons/Apps/Chrome_OS.png?raw=true",
             "tangible": true,
             "tipo": "Web_App",
+            "width": 300,
+            "height": 200,
             "contentUrl": "https://duckduckgo.com/",
             "error": {
                 "call": "https://raw.githubusercontent.com/WINCYM32/NotFound/refs/heads/gh-pages/source/Root/C%3A/Program%20Files/sys.json",
@@ -19,6 +21,8 @@
             "nombre": "Editor",
             "icono": "https://via.placeholder.com/48?text=E",
             "tangible": false,
+            "width": 300,
+            "height": 200,
             "tipo": "Direct_Access",
             "content": "<p>This is an editor where you can create or modify text files.</p>",
             "width": 400,
