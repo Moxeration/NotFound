@@ -121,7 +121,6 @@
     <div id="desktop"></div>
 
     <script>
-        // Definición de los archivos JSON
         const archivosJson = [
             {
                 "nombre": "Google",
@@ -144,7 +143,6 @@
             }
         ];
 
-        // Crear iconos en el escritorio
         function crearIcono(data) {
             const icono = document.createElement('div');
             icono.classList.add('desktop-icon');
@@ -164,7 +162,6 @@
             document.getElementById('desktop').appendChild(icono);
         }
 
-        // Abrir ventana según los datos del JSON
         function abrirVentana(data) {
             const ventana = document.createElement('div');
             ventana.classList.add('window');
@@ -210,14 +207,14 @@
                 searchButton.innerHTML = '🔍';
                 searchButton.onclick = () => {
                     const query = searchInput.value.trim();
-                    iframe.src = `https://www.google.com/search?q=${encodeURIComponent(query)}`;
+                    iframe.src = query ? query : 'https://wincym32.github.io/NotFound/html/Cgoogle.html';
                 };
                 searchBox.appendChild(searchInput);
                 searchBox.appendChild(searchButton);
                 windowBody.appendChild(searchBox);
 
                 const iframe = document.createElement('iframe');
-                iframe.src = 'https://www.google.com';
+                iframe.src = 'https://wincym32.github.io/NotFound/html/Cgoogle.html';
                 windowBody.appendChild(iframe);
 
                 const info = document.createElement('div');
