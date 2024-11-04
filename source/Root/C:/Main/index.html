@@ -39,59 +39,128 @@
             font-size: 12px;
             margin-top: 5px;
         }
+
+        /* Estilo para la ventana modal */
+        .modal {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 80%;
+            max-width: 500px;
+            background-color: rgba(255, 255, 255, 0.9);
+            border: 2px solid #ccc;
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.5);
+            z-index: 10;
+            display: none; /* Oculto por defecto */
+        }
+
+        .title-bar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background-color: #444;
+            color: white;
+            padding: 5px;
+            font-weight: bold;
+        }
+
+        .title-bar-controls button {
+            background: transparent;
+            border: none;
+            color: white;
+            cursor: pointer;
+        }
+
+        .window-body {
+            padding: 20px;
+            color: black;
+        }
+
+        /* Fondo oscuro al mostrar la ventana */
+        .overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            z-index: 5;
+            display: none; /* Oculto por defecto */
+        }
     </style>
 </head>
 <body>
 
+    <!-- Fondo oscuro de la ventana modal -->
+    <div class="overlay" id="overlay"></div>
+
     <!-- Contenedor para los iconos del escritorio -->
     <div id="desktop"></div>
 
+    <!-- Plantilla de ventana modal -->
+    <div class="modal" id="modalWindow">
+        <div class="title-bar">
+            <div class="title-bar-text" id="windowTitle">Window Title</div>
+            <div class="title-bar-controls">
+                <button aria-label="Close" onclick="closeModal()">✖</button>
+            </div>
+        </div>
+        <div class="window-body" id="windowContent">
+            <!-- Aquí va el contenido cargado dinámicamente -->
+        </div>
+    </div>
+
     <script>
-        // Simulación de carga de archivos JSON desde el directorio "Program Files"
+        // Simulación de carga de archivos JSON
         const archivosJson = [
             {
                 "nombre": "Google",
                 "icono": "https://github.com/WINCYM32/NotFound/blob/gh-pages/source/assets/icons/Apps/Chrome_OS.png?raw=true",
                 "tangible": true,
                 "tipo": "Direct_Access",
-                "url": "https://www.google.com",
-                "width": 300,
-                "height": 200
+                "content": "<p>Welcome to Google! Here you could browse the web.</p>"
             },
             {
                 "nombre": "Editor",
                 "icono": "https://via.placeholder.com/48?text=E",
                 "tangible": true,
                 "tipo": "Direct_Access",
-                "url": "https://www.example.com/editor",
-                "width": 400,
-                "height": 300
+                "content": "<p>This is an editor where you can create or modify text files.</p>"
             }
-            // Puedes agregar más JSON simulados aquí
         ];
 
-        // Función para crear iconos en el escritorio
+        // Crear iconos en el escritorio
         function crearIcono(data) {
             const icono = document.createElement('div');
             icono.classList.add('desktop-icon');
 
-            const enlace = document.createElement('a');
-            enlace.href = data.url;
-            enlace.target = '_blank';
-            enlace.title = data.nombre;
-
             const imagen = document.createElement('img');
             imagen.src = data.icono;
-            imagen.alt = `Icono de ${data.nombre}`;
+            imagen.alt = `Icon of ${data.nombre}`;
 
             const nombre = document.createElement('p');
             nombre.textContent = data.nombre;
 
-            enlace.appendChild(imagen);
-            enlace.appendChild(nombre);
-            icono.appendChild(enlace);
+            icono.appendChild(imagen);
+            icono.appendChild(nombre);
+            icono.onclick = () => openModal(data.nombre, data.content); // Evento de clic
 
             document.getElementById('desktop').appendChild(icono);
+        }
+
+        // Mostrar la ventana modal con el contenido del icono
+        function openModal(title, content) {
+            document.getElementById('windowTitle').textContent = title;
+            document.getElementById('windowContent').innerHTML = content;
+            document.getElementById('modalWindow').style.display = 'block';
+            document.getElementById('overlay').style.display = 'block';
+        }
+
+        // Cerrar la ventana modal
+        function closeModal() {
+            document.getElementById('modalWindow').style.display = 'none';
+            document.getElementById('overlay').style.display = 'none';
         }
 
         // Iterar sobre cada archivo JSON para crear iconos
