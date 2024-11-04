@@ -76,6 +76,7 @@
             display: flex;
             flex-direction: column;
             padding: 20px;
+            overflow: hidden;
         }
         .searchbox {
             display: flex;
@@ -98,6 +99,11 @@
             border: none;
             color: white;
             cursor: pointer;
+        }
+        iframe {
+            flex: 1;
+            width: 100%;
+            border: none;
         }
         .info {
             color: #00f;
@@ -214,7 +220,6 @@
                 iframe.src = 'https://www.google.com';
                 windowBody.appendChild(iframe);
 
-                // Información adicional
                 const info = document.createElement('div');
                 info.classList.add('info');
                 info.innerHTML = 'More information';
