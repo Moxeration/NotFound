@@ -10,22 +10,23 @@
             margin: 0;
             padding: 0;
             height: 100vh;
-            background-image: url('https://raw.githubusercontent.com/WINCYM32/NotFound/refs/heads/gh-pages/source/assets/backgrounds/img4.jpg');
+            background-image: url('https://github.com/WINCYM32/NotFound/blob/gh-pages/source/assets/backgrounds/img11.png?raw=true');
             background-size: cover;
             background-position: center;
             display: flex;
             justify-content: center;
             align-items: center;
             color: white;
-            filter: blur(5px); /* Efecto de desenfoque */
         }
         #desktop {
             display: flex;
             flex-wrap: wrap;
             gap: 10px;
             padding: 20px;
-            position: relative; /* Asegura que el escritorio esté posicionado correctamente */
-            filter: blur(0); /* Sin desenfoque en el escritorio */
+            max-width: 800px;
+            position: absolute; /* Asegurarse de que los iconos estén en el fondo */
+            top: 0;
+            left: 0;
         }
         .desktop-icon {
             width: 80px;
@@ -75,6 +76,8 @@
             flex: 1;
             display: flex;
             flex-direction: column;
+            position: relative;
+            overflow: hidden;
         }
         .searchbox {
             display: flex;
@@ -98,25 +101,41 @@
             color: white;
             cursor: pointer;
         }
+        .info {
+            color: lightblue;
+            margin-top: 10px;
+            text-align: center;
+        }
         iframe {
             width: 100%;
-            height: calc(100% - 30px); /* Ajuste para la barra de búsqueda */
+            height: calc(100% - 50px); /* Ajustar para dejar espacio para la barra de búsqueda */
             border: none;
+            background: url('https://raw.githubusercontent.com/WINCYM32/NotFound/refs/heads/gh-pages/source/assets/backgrounds/img4.jpg') no-repeat center center; /* Fondo de la ventana */
+            background-size: cover;
+            filter: blur(5px); /* Aplicar desenfoque al fondo */
         }
-        .info {
-            color: blue;
-            margin-top: 10px;
+        .blur-content {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            color: black; /* Texto de la superposición */
+            z-index: 1; /* Asegurarse de que esté por encima del iframe */
+            padding: 20px;
             text-align: center;
         }
     </style>
 </head>
 <body>
 
-    <!-- Contenedor para los iconos del escritorio -->
     <div id="desktop"></div>
 
     <script>
-        // Definición de los archivos JSON
         const archivosJson = [
             {
                 "nombre": "Google",
@@ -139,7 +158,6 @@
             }
         ];
 
-        // Crear iconos en el escritorio
         function crearIcono(data) {
             const icono = document.createElement('div');
             icono.classList.add('desktop-icon');
@@ -159,7 +177,6 @@
             document.getElementById('desktop').appendChild(icono);
         }
 
-        // Abrir ventana según los datos del JSON
         function abrirVentana(data) {
             const ventana = document.createElement('div');
             ventana.classList.add('window');
@@ -213,16 +230,16 @@
 
                 const iframe = document.createElement('iframe');
                 iframe.src = 'https://www.google.com';
-                windowBody.appendChild(iframe);
 
-                const infoLink = document.createElement('div');
-                infoLink.classList.add('info');
-                infoLink.innerHTML = '<a href="#" style="color: blue;">More Information</a>';
-                infoLink.querySelector('a').onclick = () => {
-                    // Configura la redirección aquí
-                    window.open('https://www.example.com', '_blank'); // Cambia la URL según sea necesario
-                };
-                windowBody.appendChild(infoLink);
+                // Agregar la superposición con el texto de información
+                const blurContent = document.createElement('div');
+                blurContent.classList.add('blur-content');
+                blurContent.innerHTML = `
+                    <p style="font-size: 16px;">Enter a URL to start</p>
+                    <p class="info">More information</p>
+                `;
+                windowBody.appendChild(blurContent);
+                windowBody.appendChild(iframe);
             } else {
                 windowBody.innerHTML = data.content;
             }
@@ -246,19 +263,4 @@
 
                     document.addEventListener('mousemove', onMouseMove);
 
-                    titleBar.onmouseup = function () {
-                        document.removeEventListener('mousemove', onMouseMove);
-                        titleBar.onmouseup = null;
-                    };
-                };
-
-                titleBar.ondragstart = function () {
-                    return false;
-                };
-            }
-        }
-
-        archivosJson.forEach(crearIcono);
-    </script>
-</body>
-</html>
+                    titleBar.onmouseup = function ()
