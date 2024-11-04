@@ -1,1 +1,8 @@
-
+{
+    "Error_572": {
+        "title": "Error",
+        "icon": "https://github.com/WINCYM32/NotFound/blob/gh-pages/source/assets/icons/error.gif?raw=true",
+        "message": "We are sorry but this application is currently unavailable, error code: 572 - Not Available.",
+        "button": "Ok"
+    }
+}
