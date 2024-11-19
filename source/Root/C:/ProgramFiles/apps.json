@@ -5,6 +5,7 @@
             "icono": "https://github.com/WINCYM32/NotFound/blob/gh-pages/source/assets/icons/Apps/Chrome_OS.png?raw=true",
             "tangible": true,
             "tipo": "Web_App",
+            "app"; Disabled,
             "width": 300,
             "height": 200,
             "contentUrl": "https://duckduckgo.com/",
